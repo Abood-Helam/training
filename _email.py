@@ -4,3 +4,4 @@ if re.search(r"^(\w+\.)\w+@(\w+\.)?\w+\.com$", email , re.IGNORECASE):
     print("valid")
 else:
     print("invalid")
+

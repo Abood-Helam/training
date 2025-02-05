@@ -1,0 +1,88 @@
+import os 
+
+TASKS_FILE = "tasks.txt"
+
+def load_tasks():
+    if os.path.exists(TASKS_FILE):
+        with open(TASKS_FILE, "r") as file:
+            tasks = file.read().splitlines()
+    
+    else:
+        tasks = []
+    return tasks
+    
+
+def save_tasks(tasks):
+    with open(TASKS_FILE, "w") as file:
+        for task in tasks:
+            file.write(task + '\n')
+
+def show_tasks(tasks):
+    if not tasks:
+        print('there is no tasks yet')
+    else:
+        print('the tasks is')
+        for i,task in enumerate(tasks, 1):
+            print(f'{i}. {task}')
+
+def add_task(tasks):
+    task = input("wat's the new task is? ")
+    tasks.append(task)
+    print(f"adding {task} is done")
+
+def delet_task(tasks):
+    show_tasks(tasks)
+    try:
+        task_num = int(input("enter the number of the task you want to delet: "))
+        if 1 <= task_num <=len(tasks):
+            remove_task = tasks.pop(task_num - 1)
+            print(f"{remove_task} is deleted")
+        else:
+            print("false number!")
+    except ValueError:
+        print("please enter the true number: ")
+
+def edit_task(tasks):
+    show_tasks(tasks)
+    try:
+        task_num = int(input("enter the number of the task you want to edit: "))
+        if 1 <= task_num <= len(tasks):
+            new_task = input("enter the new task: ")
+            tasks[task_num - 1] = new_task
+            print(f"the {task_num} has been editted")
+        else:
+            print("false number! ")
+    except ValueError:
+        print("enter a correct number: ")
+
+def main_menu():
+    tasks = load_tasks()
+    while True:
+        print("the menu of tasks maneger\n")
+        print("1  show tasks")
+        print("2  add tasks")
+        print("3  delet tasks")
+        print("4  edit tasks")
+        print("5  sve tasks and exit")
+        choice = input("silect the opsion: ")
+
+        if choice == "1":
+            show_tasks(tasks)
+        elif choice == "2":
+            add_task(tasks)
+        elif choice == "3":
+            delet_task(tasks)
+        elif choice == "4":
+            edit_task(tasks)
+        elif choice == "5":
+            save_tasks(tasks)
+            print("tasks has been saved, exiting program")
+            break
+        else:
+            print("rong choice please try again")
+
+if __name__ == "__main__":
+    main_menu()
+
+
+
