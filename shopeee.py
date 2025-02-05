@@ -10,8 +10,8 @@ class Item:
     def print_me(self):
         print(f"name: {self.name},date: {self.date}, color: {self.color}, size: {self.size}, quantity: {self.quantity}")
 
-    def toJson(self):
-        return json.dumps(self, default=lambda o:o.__dict__)
+    # def toJson(self):
+    #     return json.dumps(self, default=lambda o:o.__dict__)
         
         
 def add_object():
@@ -39,21 +39,20 @@ def delet_object():
         if n.name == d:
             store.remove(n)
 
-import json 
+import pickle 
 import os
 
-TASKS_FILE = "store.txt"
+TASKS_FILE = "store.db"
 
 def load_tasks():
     if os.path.exists(TASKS_FILE):
-        with open(TASKS_FILE, "r") as file:
-            for item in file.readlines():
-                store.append(json.load(item))    
+        global store
+        with open(TASKS_FILE, "br") as file:
+            store = pickle.load(file)
 
 def save_tasks():
-    with open(TASKS_FILE, "w") as file:
-        for item in store:
-            file.write(f"{item.name}, {item.size}, {item.date}, {item.color}, {item.quanti}")
+    with open(TASKS_FILE, "bw") as file:
+        pickle.dump(store, file)
 
 def show_tasks():
     if not store:
